@@ -7,12 +7,38 @@ import MainView from './views/main'
 import Me from './models/me'
 import Movies from './models/movies'
 import domReady from 'domready'
+import toastr from 'toastr'
+import * as Fingerprint2 from 'fingerprintjs2'
+import { getCookie } from './utils'
 
 import '../stylesheets/app.styl'
 import '@mdi/font/css/materialdesignicons'
 import 'bootstrap/dist/css/bootstrap'
 import 'pretty-checkbox/dist/pretty-checkbox'
-// import 'hover.css/css/hover.css'
+import 'toastr/build/toastr.css'
+
+let FP2 = Fingerprint2.default()
+
+toastr.options = {
+    "positionClass": "toast-bottom-right",
+}
+
+if (!getCookie('fp')) {
+    if (window.requestIdleCallback) {
+        requestIdleCallback(() => {
+            FP2.get(fp => {
+               document.cookie = `fp=${fp}` 
+            })
+        })
+    } else {
+        setTimeout(() => {
+            FP2.get(components => {
+               document.cookie = `fp=${fp}` 
+            })  
+        }, 500)
+    }
+}
+
 
 // attach our app to `window` so we can
 // easily access it from the console.

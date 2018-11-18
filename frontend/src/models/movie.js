@@ -10,6 +10,6 @@ export default AmpersandModel.extend({
         imdbURL: ['string', true, ''],
     },
     session: {
-        selected: ['boolean', true, true]
+        selected: ['boolean', true, false]
     },
 })
