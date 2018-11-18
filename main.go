@@ -1,7 +1,6 @@
 package main // import "github.com/noonien/roddit-movie-night"
 
 import (
-	"log"
 	"net/http"
 	"os"
 	"time"
@@ -9,15 +8,11 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/gobuffalo/packr"
-
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
-var db *gorm.DB
-
 func main() {
-	// initDB()
+	db = initDB()
+	migrate(db)
 	defer db.Close()
 
 	port := os.Getenv("PORT")
@@ -37,23 +32,4 @@ func main() {
 	r.Route("/api", api)
 
 	http.ListenAndServe(":"+port, r)
-}
-
-func initDB() {
-	dbURL := os.Getenv("DATABASE_URL")
-	if dbURL == "" {
-		log.Fatal("DATABASE_URL env missing")
-	}
-
-	var err error
-	db, err = gorm.Open(dbURL)
-	if err != nil {
-		log.Fatalf("couldn't connect to db: %v", err)
-	}
-
-	db.AutoMigrate(&IP{})
-	db.AutoMigrate(&User{})
-	db.AutoMigrate(&Poll{})
-	db.AutoMigrate(&Movie{})
-	db.AutoMigrate(&Vote{})
 }

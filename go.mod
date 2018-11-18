@@ -19,6 +19,7 @@ require (
 	github.com/google/shlex v0.0.0-20181106134648-c34317bd91bf // indirect
 	github.com/jinzhu/gorm v1.9.1
 	github.com/jinzhu/inflection v0.0.0-20180308033659-04140366298a // indirect
+	github.com/jmcvetta/randutil v0.0.0-20150817122601-2bb1b664bcff
 	github.com/josharian/impl v0.0.0-20180228163738-3d0f908298c4 // indirect
 	github.com/jstemmer/gotags v1.4.1 // indirect
 	github.com/kisielk/errcheck v1.1.0 // indirect
@@ -26,10 +27,12 @@ require (
 	github.com/koron/iferr v0.0.0-20180615142939-bb332a3b1d91 // indirect
 	github.com/lib/pq v1.0.0 // indirect
 	github.com/mattn/go-isatty v0.0.4 // indirect
+	github.com/mattn/go-sqlite3 v1.10.0 // indirect
 	github.com/mdempsky/gocode v0.0.0-20181115211830-6730ddbe5142 // indirect
 	github.com/nicksnyder/go-i18n v1.10.0 // indirect
 	github.com/peterh/liner v1.1.0 // indirect
 	github.com/rogpeppe/godef v1.0.0 // indirect
+	github.com/rs/xid v1.2.1
 	github.com/spf13/pflag v1.0.3 // indirect
 	github.com/stamblerre/gocode v0.0.0-20181114191507-6157820e3040 // indirect
 	github.com/zmb3/gogetdoc v0.0.0-20181026013253-9098cf5fc236 // indirect

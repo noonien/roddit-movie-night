@@ -1,0 +1,69 @@
+package main
+
+import (
+	"time"
+
+	"github.com/jinzhu/gorm"
+)
+
+var db *gorm.DB
+
+type AccessMode string
+
+const (
+	AccessAllowFingerprinted = "allow_fingerprinted"
+	AccessDeny               = "deny"
+)
+
+type IP struct {
+	IP     string `gorm:"primarykey; not null"`
+	Access AccessMode
+	Note   string
+}
+
+type User struct {
+	ID string `gorm:primarykey; not null"`
+
+	IP          string `gorm:"not null"`
+	Fingerprint string `gorm:"not null"`
+
+	CreatedAt time.Time
+}
+
+type Poll struct {
+	ID string `json:"id" gorm:"primarykey; not null"`
+
+	Name string `json:"name" gorm:"not null"`
+	Info string `json:"info"`
+
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	ExpiresAt time.Time `json:"expires_at"`
+}
+
+type Movie struct {
+	ID     string `json:"id" gorm:"primarykey; not null"`
+	PollID string `json:"poll_id" gorm:"not null"`
+
+	Name    string `json:"name"`
+	Image   string `json:"image"`
+	IMDBURL string `json:"imdbURL"`
+
+	SuggestedBy string `json:"-" gorm:"foreignkey:User"`
+}
+
+type Vote struct {
+	PollID  string
+	UserID  string
+	MovieID string
+
+	CreatedAt time.Time
+}
+
+func migrate(db *gorm.DB) {
+	db.AutoMigrate(&IP{})
+	db.AutoMigrate(&User{})
+	db.AutoMigrate(&Poll{})
+	db.AutoMigrate(&Movie{})
+	db.AutoMigrate(&Vote{})
+}
