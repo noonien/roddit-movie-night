@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/rs/xid"
 )
@@ -32,6 +33,11 @@ func getMovies(w http.ResponseWriter, r *http.Request) {
 func registerVote(w http.ResponseWriter, r *http.Request) {
 	user, _ := r.Context().Value("user").(*User)
 	poll, _ := r.Context().Value("poll").(*Poll)
+
+	if poll.ClosesAt.Before(time.Now()) {
+		userError(w, "poll is closed")
+		return
+	}
 
 	var movies struct{ Votes []string }
 	err := decodeJSON(r, &movies)
@@ -69,6 +75,11 @@ func registerVote(w http.ResponseWriter, r *http.Request) {
 func suggestMovies(w http.ResponseWriter, r *http.Request) {
 	user, _ := r.Context().Value("user").(*User)
 	poll, _ := r.Context().Value("poll").(*Poll)
+
+	if poll.ClosesAt.Before(time.Now()) {
+		userError(w, "poll is closed")
+		return
+	}
 
 	var req struct {
 		IMDBURL string `json:"imdbURL"`
