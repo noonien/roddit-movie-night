@@ -1,6 +1,7 @@
 
 import app from 'ampersand-app'
 import _ from 'lodash'
+import $ from 'jquery'
 import Router from './router'
 import MainView from './views/main'
 import Me from './models/me'
@@ -16,6 +17,7 @@ import 'pretty-checkbox/dist/pretty-checkbox'
 // attach our app to `window` so we can
 // easily access it from the console.
 window.app = app;
+window.$ = $;
 
 // Extends our main app singleton
 app.extend({

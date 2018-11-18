@@ -1,10 +1,16 @@
-li(data-hook="action-select" style="cursor: pointer;").person.list-group-item.container.hvr-grow-shadow
-  img(data-hook="avatar", width="40", height="40")
-  a(data-hook="name")
-  span.btn-group.float-right 
-    div(style="margin-top: 6px;")
+li(data-hook="action-select" style="cursor: pointer; height: 5em;").person.list-group-item.container.hvr-grow-shadow
+  img(data-hook="image", href=imdbURL, width="40", height="60").mr-3
+  a(data-hook="name" style="color: rgb(33, 37, 41); font-size: 18px;")
+
+  div.float-right 
+    div(style="margin-top: 12px;")
       .pretty.p-icon.p-curve.p-smooth(style="font-size: 32px;")
-        input(data-hook="checkbox" type='checkbox')
+        input(data-hook="selected", type="checkbox")
         .state.p-success(style="margin-right: -42px;")
           i.icon.mdi.mdi-check
           label
+
+  div.float-right.mr-5(style="font-size: 18px; margin-top: 12px;")
+    span(data-hook="votes")
+    | &nbsp;voturi
+

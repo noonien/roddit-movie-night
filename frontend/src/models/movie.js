@@ -4,37 +4,12 @@ import AmpersandModel from 'ampersand-model'
 export default AmpersandModel.extend({
     props: {
         id: 'any',
-        firstName: ['string', true, ''],
-        lastName: ['string', true, ''],
-        coolnessFactor: ['number', true, 5]
+        numVotes: ['number', true, 0],
+        name: ['string', true, ''],
+        image: ['string', true, ''],
+        imdbURL: ['string', true, ''],
     },
     session: {
-        selected: ['boolean', true, false]
+        selected: ['boolean', true, true]
     },
-    derived: {
-        fullName: {
-            deps: ['firstName', 'lastName'],
-            fn: function () {
-                return this.firstName + ' ' + this.lastName;
-            }
-        },
-        avatar: {
-            deps: ['firstName', 'lastName'],
-            fn: function () {
-                return 'http://robohash.org/' + encodeURIComponent(this.fullName) + '?size=80x80';
-            }
-        },
-        editUrl: {
-            deps: ['id'],
-            fn: function () {
-                return '/person/' + this.id + '/edit';
-            }
-        },
-        viewUrl: {
-            deps: ['id'],
-            fn: function () {
-                return '/person/' + this.id;
-            }
-        }
-    }
 })

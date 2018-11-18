@@ -2,10 +2,12 @@ section.page.pageOne
   h3 Filme propuse:
   ul.list-group.mt-3(data-hook="movie-list")
 
-  button.btn.btn-success.btn-lg.float-right.mt-3(data-hook="submit-vote") Voteaza
+  if !readonly
+    button.btn.btn-success.btn-lg.float-right.mt-3(data-hook="action-vote") Voteaza
 
-  .buttons.btn-group
-    button.btn.btn-default(data-hook="add") .addRandom()
-
-  h3.mt-5 Propune un film:
+    h3.mt-5.mb-3 Propune un film:
+    .input-group.input-group-lg.mb-3
+      input.form-control(data-hook="suggest-input" type='text', placeholder="IMDB link", aria-label="IMDB link")
+      .input-group-append
+        button.btn.btn-success(data-hook="action-suggest-movie" type='button') Propune
 

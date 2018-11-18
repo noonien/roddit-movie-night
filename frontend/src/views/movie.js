@@ -4,40 +4,31 @@ import movieTemplate from '../../templates/includes/movie'
 export default View.extend({
     template: movieTemplate,
     bindings: {
-        'model.fullName': '[data-hook~=name]',
-        'model.avatar': {
+        'model.name': '[data-hook~=name]',
+        'model.image': {
             type: 'attribute',
-            hook: 'avatar',
+            hook: 'image',
             name: 'src'
         },
-        'model.editUrl': {
-            type: 'attribute',
-            hook: 'action-edit',
-            name: 'href'
-        },
-        'model.viewUrl': {
+        'model.imdbURL': {
             type: 'attribute',
             hook: 'name',
             name: 'href'
-        }
+        },
+        'model.selected': {
+            type: 'booleanAttribute',
+            hook: 'selected',
+            name: 'checked'
+        },
+        'model.numVotes': {
+            type: 'text',
+            hook: 'votes',
+        },
     },
     events: {
-        'click [data-hook~=action-delete]': 'handleRemoveClick',
         'click [data-hook~=action-select]': 'select',
-        // 'click [data-hook~=check]': 'ignoreClick',
-    },
-    ignoreClick(evt) {
-        evt.preventDefault()
-        return false
     },
     select() {
-        let $check = this.queryByHook('checkbox');
-        $check.checked = !$check.checked
-        console.log('$check.checked:', $check.checked);
-        
+        this.model.selected = !this.model.selected
     },
-    handleRemoveClick() {
-        this.model.destroy();
-        return false;
-    }
 });

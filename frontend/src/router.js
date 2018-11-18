@@ -7,6 +7,7 @@ import VotingPage from './pages/voting'
 module.exports = Router.extend({
     routes: {
         '': 'voting',
+        '/results': 'results',
         '(*path)': 'catchAll'
     },
 
@@ -15,6 +16,13 @@ module.exports = Router.extend({
         app.trigger('page', new VotingPage({
             model: app.me,
             collection: app.movies
+        }));
+    },
+    results() {
+        app.trigger('page', new VotingPage({
+            model: app.me,
+            collection: app.movies,
+            readonly: true,
         }));
     },
     catchAll() {
