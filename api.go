@@ -13,7 +13,7 @@ func api(r chi.Router) {
 	r.Use(identify)
 	r.Use(getPoll)
 	r.Get("/polls/{pollID}/movies", getMovies)
-	r.Post("polls/{pollID}/vote", registerVote)
+	r.Post("/polls/{pollID}/vote", registerVote)
 	r.Post("/polls/{pollID}/suggest", suggestMovies)
 }
 

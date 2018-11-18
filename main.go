@@ -17,7 +17,7 @@ import (
 var db *gorm.DB
 
 func main() {
-	initDB()
+	// initDB()
 	defer db.Close()
 
 	port := os.Getenv("PORT")
@@ -34,7 +34,7 @@ func main() {
 
 	frontBox := packr.NewBox("frontend/dist")
 	r.Mount("/", http.FileServer(frontBox))
-	r.Route("api", api)
+	r.Route("/api", api)
 
 	http.ListenAndServe(":"+port, r)
 }
