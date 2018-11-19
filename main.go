@@ -5,9 +5,10 @@ import (
 	"os"
 	"time"
 
+	"github.com/noonien/roddit-movie-night/frontend"
+
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/gobuffalo/packr"
 )
 
 func main() {
@@ -27,8 +28,7 @@ func main() {
 	r.Use(middleware.Timeout(5 * time.Second))
 	r.Use(middleware.Recoverer)
 
-	frontBox := packr.NewBox("frontend/dist")
-	r.Mount("/", http.FileServer(frontBox))
+	r.Mount("/", http.FileServer(frontend.Box))
 	r.Route("/api", api)
 
 	http.ListenAndServe(":"+port, r)
