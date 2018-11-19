@@ -59,7 +59,11 @@ func (mr MovieRatings) Value() (driver.Value, error) {
 func (mr *MovieRatings) Scan(src interface{}) error {
 	source, ok := src.([]byte)
 	if !ok {
-		return errors.New("Type assertion .([]byte) failed.")
+		sourceStr, ok := src.(string)
+		if !ok {
+			return errors.New("could not type assert MovieRatings")
+		}
+		source = []byte(sourceStr)
 	}
 
 	err := json.Unmarshal(source, mr)
