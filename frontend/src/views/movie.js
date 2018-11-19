@@ -4,13 +4,13 @@ import movieTemplate from '../../templates/includes/movie'
 export default View.extend({
     template: movieTemplate,
     bindings: {
-        'model.name': '[data-hook~=name]',
-        'model.image': {
+        'model.title': '[data-hook~=name]',
+        'model.poster': {
             type: 'attribute',
             hook: 'image',
             name: 'src'
         },
-        'model.imdbURL': {
+        'model.imdb_url': {
             type: 'attribute',
             hook: 'name',
             name: 'href'
@@ -20,9 +20,25 @@ export default View.extend({
             hook: 'selected',
             name: 'checked'
         },
-        'model.numVotes': {
+        'model.votes': {
             type: 'text',
             hook: 'votes',
+        },
+        'model.plot': {
+            type: 'text',
+            hook: 'plot',
+        },
+        'model.genre': {
+            type: 'text',
+            hook: 'genre',
+        },
+        'model.year': {
+            type: 'text',
+            hook: 'year',
+        },
+        'model.rating_imdb': {
+            type: 'text',
+            hook: 'rating',
         },
     },
     events: {
@@ -30,5 +46,9 @@ export default View.extend({
     },
     select() {
         this.model.selected = !this.model.selected
+        console.log('this.model.rating_imdb:', this.model.rating_imdb);
+        
+        
+        this.parent.voteDebounced()
     },
 });

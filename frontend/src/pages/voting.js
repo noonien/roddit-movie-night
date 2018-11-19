@@ -1,5 +1,6 @@
 import PageView from './base'
 import $ from 'jquery'
+import _ from 'lodash'
 import toastr from 'toastr'
 
 import votingTemplate from '../../templates/pages/voting'
@@ -9,29 +10,42 @@ import MovieView from '../views/movie'
 export default PageView.extend({
     pageTitle: 'Movie Night',
     template: votingTemplate,
+    bindings: {
+        'model.poll.name': {
+            type: 'text',
+            hook: 'name',
+        },
+        'model.poll.info': [{
+            type: 'attribute',
+            name: 'href',
+            hook: 'info',
+        },{
+            type: 'text',
+            hook: 'info',
+        }],
+    },
     events: {
         'click [data-hook~=action-vote]': 'vote',
-        'click [data-hook~=action-refresh]': 'refresh',
         'click [data-hook~=action-suggest-movie]': 'suggestMovie',
+    },
+    initialize() {
+        setInterval(() => {
+            this.fetchModel()
+        }, 15000)
+        this.voteDebounced = _.debounce(() => { this.vote() }, 500)
     },
     render: function () {
         this.renderWithTemplate()
-        this.renderCollection(this.collection,
+        this.renderCollection(this.model.movies,
             MovieView,
-            this.queryByHook('movie-list'),
-            {
+            this.queryByHook('movie-list'), {
                 reverse: true
-            });
-
-        if (!this.collection.length) {
-            this.fetchCollection();
-        }
-    },
-    refresh() {
-        this.fetchCollection()
+            })
+        
+        this.fetchModel()
     },
     vote() {
-        let votes = this.collection.where({ selected: true })
+        let votes = this.model.movies.where({ selected: true })
             .map(movie => movie.id)
 
         $.ajax({
@@ -43,15 +57,18 @@ export default PageView.extend({
             })
         })
         .then(() => {
-            toastr.success('Ai votat cu succes. Merci!')
+            // toastr.success('Ai votat cu succes. Merci!')
         })
         .fail(err => {
             toastr.error('S-a produs o eroare, incearca din nou. Sorry!')
         })
         .always(() => {
-            this.fetchCollection();
+            this.fetchModel();
         })
     },
+    // voteDebounced: function() {
+    //     window.debounced = 
+    // },
     suggestMovie() {
         let $input = $(this.queryByHook('suggest-input'))
         let url = $input.val()
@@ -61,7 +78,7 @@ export default PageView.extend({
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
-                imdbURL: url
+                url
             })
         })
         .then(() => {
@@ -72,11 +89,18 @@ export default PageView.extend({
             toastr.error('S-a produs o eroare, incearca din nou. Sorry!')
         })
         .always(() => {
-            this.fetchCollection();
+            this.fetchModel();
         })
     },
-    fetchCollection: function () {
-        this.collection.fetch();
+    fetchModel() {
+        this.model.fetch({ 
+            success: () => {
+                for (let vote of this.model.votes) {
+                    let movie = this.model.movies.findWhere({ id: vote })
+                    movie.selected = true
+                }
+            }
+        });
         return false;
     },
 });

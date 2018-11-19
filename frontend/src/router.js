@@ -1,5 +1,8 @@
-var app = require('ampersand-app');
-var Router = require('ampersand-router');
+import app from 'ampersand-app'
+import Router from 'ampersand-router'
+
+import Movies from './models/movies'
+import Poll from './models/poll'
 
 import VotingPage from './pages/voting'
 
@@ -7,23 +10,26 @@ import VotingPage from './pages/voting'
 module.exports = Router.extend({
     routes: {
         '': 'voting',
-        '/results': 'results',
         '(*path)': 'catchAll'
     },
 
     // ------- ROUTE HANDLERS ---------
     voting() {
-        app.trigger('page', new VotingPage({
-            model: app.me,
-            collection: app.movies
-        }));
-    },
-    results() {
-        app.trigger('page', new VotingPage({
-            model: app.me,
-            collection: app.movies,
-            readonly: true,
-        }));
+        let poll = new Poll()
+
+        poll.fetch({
+            success(poll) {
+                for (let vote of poll.votes) {
+                    let movie = poll.movies.findWhere({ id: vote })
+                    movie.selected = true
+                }
+
+                app.trigger('page', new VotingPage({
+                    model: poll,
+                }));
+            }
+        })
+        
     },
     catchAll() {
         this.redirectTo('');

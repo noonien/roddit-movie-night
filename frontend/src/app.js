@@ -4,8 +4,6 @@ import _ from 'lodash'
 import $ from 'jquery'
 import Router from './router'
 import MainView from './views/main'
-import Me from './models/me'
-import Movies from './models/movies'
 import domReady from 'domready'
 import toastr from 'toastr'
 import * as Fingerprint2 from 'fingerprintjs2'
@@ -32,7 +30,7 @@ if (!getCookie('fp')) {
         })
     } else {
         setTimeout(() => {
-            FP2.get(components => {
+            FP2.get(fp => {
                document.cookie = `fp=${fp}` 
             })  
         }, 500)
@@ -42,19 +40,17 @@ if (!getCookie('fp')) {
 
 // attach our app to `window` so we can
 // easily access it from the console.
-window.app = app;
-window.$ = $;
+window.app = app
+window.$ = $
+window._ = _
 
 // Extends our main app singleton
 app.extend({
-    me: new Me(),
-    movies: new Movies(),
     router: new Router(),
     // This is where it all starts
     init() {
         // Create and attach our main view
         this.mainView = new MainView({
-            model: this.me,
             el: document.body
         });
 

@@ -1,16 +1,33 @@
-li(data-hook="action-select" style="cursor: pointer; height: 5em;").person.list-group-item.container.hvr-grow-shadow
-  img(data-hook="image", href=imdbURL, width="40", height="60").mr-3
-  a(data-hook="name" style="color: rgb(33, 37, 41); font-size: 18px;")
+li.movie-card(data-hook="action-select").person.list-group-item.container.hvr-grow-shadow
+  .row
+    .col-3
+      img(data-hook="image", href=imdb_url, width="255", height="340")
+    .col.pt-3
+      .movie-body
+        .row
+          .col
+            a.movie-title(data-hook="name").mr-2
+            | (
+            span.movie-year(data-hook="year")
+            | )
+          .col
+            .float-right
+              span.mdi.mdi-star
+              span.movie-rating(data-hook="rating").mr-2.ml-1
+        p.movie-genre(data-hook="genre")
+        p.movie-plot.mt-4(data-hook="plot")
+      .movie-votes
+        div.float-right 
+          div(style="margin-top: 12px;")
+            .pretty.p-icon.p-curve.p-smooth(style="font-size: 32px;")
+              input(data-hook="selected", type="checkbox")
+              .state.p-success(style="margin-right: -42px;")
+                i.icon.mdi.mdi-check
+                label
 
-  div.float-right 
-    div(style="margin-top: 12px;")
-      .pretty.p-icon.p-curve.p-smooth(style="font-size: 32px;")
-        input(data-hook="selected", type="checkbox")
-        .state.p-success(style="margin-right: -42px;")
-          i.icon.mdi.mdi-check
-          label
+        div.float-right.mr-4(style="font-size: 18px; margin-top: 12px;")
+          span(data-hook="votes")
+          | &nbsp;voturi
 
-  div.float-right.mr-5(style="font-size: 18px; margin-top: 12px;")
-    span(data-hook="votes")
-    | &nbsp;voturi
+
 
