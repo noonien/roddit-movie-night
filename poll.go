@@ -143,7 +143,7 @@ func suggestMovies(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var req struct {
-		IMDBURL string `json:"imdb_url"`
+		URL string `json:"url"`
 	}
 	err = decodeJSON(r, &req)
 	if err != nil {
@@ -151,7 +151,7 @@ func suggestMovies(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	movie, err := getMovieInfo(req.IMDBURL)
+	movie, err := getMovieInfo(req.URL)
 	if err != nil {
 		userError(w, err.Error())
 		return
