@@ -21,23 +21,6 @@ toastr.options = {
     "positionClass": "toast-bottom-right",
 }
 
-if (!getCookie('fp')) {
-    if (window.requestIdleCallback) {
-        requestIdleCallback(() => {
-            FP2.get(fp => {
-               document.cookie = `fp=${fp}` 
-            })
-        })
-    } else {
-        setTimeout(() => {
-            FP2.get(fp => {
-               document.cookie = `fp=${fp}` 
-            })  
-        }, 500)
-    }
-}
-
-
 // attach our app to `window` so we can
 // easily access it from the console.
 window.app = app
@@ -71,5 +54,21 @@ app.extend({
     }
 });
 
-// run it on domReady
-domReady(_.bind(app.init, app));
+if (!getCookie('fp')) {
+    const setFP = () => {
+        FP2.get(fp => {
+            console.log('SET FP')
+            document.cookie = `fp=${fp}` 
+            app.init()
+        })
+    }
+
+    if (window.requestIdleCallback) {
+        requestIdleCallback(setFP)
+    } else {
+        setTimeout(setFP, 500)
+    }
+} else {
+    console.log('INIT')
+    app.init()
+}
