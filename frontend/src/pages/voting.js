@@ -32,7 +32,6 @@ export default PageView.extend({
         setInterval(() => {
             this.fetchModel()
         }, 15000)
-        this.voteDebounced = _.debounce(() => { this.vote() }, 500)
     },
     render: function () {
         this.renderWithTemplate()
@@ -66,9 +65,6 @@ export default PageView.extend({
             this.fetchModel();
         })
     },
-    // voteDebounced: function() {
-    //     window.debounced = 
-    // },
     suggestMovie() {
         let $input = $(this.queryByHook('suggest-input'))
         let url = $input.val()

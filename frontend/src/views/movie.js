@@ -46,9 +46,7 @@ export default View.extend({
     },
     select() {
         this.model.selected = !this.model.selected
-        console.log('this.model.rating_imdb:', this.model.rating_imdb);
         
-        
-        this.parent.voteDebounced()
+        this.parent.vote()
     },
 });
