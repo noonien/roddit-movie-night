@@ -1,6 +1,9 @@
 package main
 
 import (
+	"database/sql/driver"
+	"encoding/json"
+	"errors"
 	"time"
 
 	"github.com/jinzhu/gorm"
@@ -41,15 +44,52 @@ type Poll struct {
 	ClosesAt  time.Time `json:"closes_at"`
 }
 
+type MovieRating struct {
+	Source string `json:"source"`
+	Rating string `json:"rating"`
+}
+
+type MovieRatings []MovieRating
+
+func (mr MovieRatings) Value() (driver.Value, error) {
+	j, err := json.Marshal(mr)
+	return j, err
+}
+
+func (mr *MovieRatings) Scan(src interface{}) error {
+	source, ok := src.([]byte)
+	if !ok {
+		return errors.New("Type assertion .([]byte) failed.")
+	}
+
+	err := json.Unmarshal(source, mr)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 type Movie struct {
 	ID     string `json:"id" gorm:"primarykey; not null"`
-	PollID string `json:"poll_id" gorm:"not null"`
+	PollID string `json:"-" gorm:"not null"`
 
-	Name    string `json:"name"`
-	Image   string `json:"image"`
-	IMDBURL string `json:"imdbURL"`
+	Title    string       `json:"title"`
+	Year     string       `json:"year"`
+	Rated    string       `json:"rated"`
+	Runtime  string       `json:"runtime"`
+	Genre    string       `json:"genre"`
+	Director string       `json:"director"`
+	Writer   string       `json:"writer"`
+	Actors   string       `json:"actors"`
+	Plot     string       `json:"plot"`
+	Language string       `json:"language"`
+	Poster   string       `json:"poster"`
+	Ratings  MovieRatings `json:"ratings" gorm:"type:text"`
+	URL      string       `json:"url"`
 
-	SuggestedBy string `json:"-" gorm:"foreignkey:User"`
+	SuggestedBy string    `json:"-" gorm:"foreignkey:User"`
+	CreatedAt   time.Time `json:"created_at"`
 }
 
 type Vote struct {

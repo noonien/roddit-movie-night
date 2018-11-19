@@ -25,9 +25,9 @@ var adminHashes = [][]byte{
 
 func api(r chi.Router) {
 	r.Route("/polls/{pollID}", func(r chi.Router) {
-		r.Use(identify)
-		r.Use(getPoll)
-		r.Get("/movies", getMovies)
+		r.Use(userCtx)
+		r.Use(pollCtx)
+		r.Get("/", getPoll)
 		r.Post("/vote", registerVote)
 		r.Post("/suggest", suggestMovies)
 	})
@@ -61,7 +61,7 @@ func checkAdmin(next http.Handler) http.Handler {
 	})
 }
 
-func identify(next http.Handler) http.Handler {
+func userCtx(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		remoteIP, _, _ := net.SplitHostPort(r.RemoteAddr)
 
@@ -147,7 +147,7 @@ func identify(next http.Handler) http.Handler {
 	})
 }
 
-func getPoll(next http.Handler) http.Handler {
+func pollCtx(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		pollID := chi.URLParam(r, "pollID")
 
