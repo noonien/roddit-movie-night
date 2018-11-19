@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net"
 	"net/http"
@@ -64,6 +65,9 @@ func checkAdmin(next http.Handler) http.Handler {
 func userCtx(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		remoteIP, _, _ := net.SplitHostPort(r.RemoteAddr)
+		if remoteIP == "" {
+			remoteIP = r.RemoteAddr
+		}
 
 		var ip IP
 		err := db.First(&ip, "ip = ?", remoteIP).Error
@@ -135,6 +139,8 @@ func userCtx(next http.Handler) http.Handler {
 			IP:          remoteIP,
 			Fingerprint: fingerprint,
 		}
+
+		fmt.Println(user)
 
 		err = db.Create(&user).Error
 		if err != nil {
