@@ -1,8 +1,8 @@
-li.movie-card(data-hook="action-select").person.list-group-item.container.hvr-grow-shadow
+li.movie-card(data-hook="action-select").person.list-group-item.container.hvr-underline-reveal
   .row
     .col-3
-      img(data-hook="image", href=imdb_url, width="255", height="340")
-    .col.pt-3
+      img.img-fluid(data-hook="image", href=imdb_url)
+    .col.pt-3(style='display: flex;')
       .movie-body
         .row
           .col
@@ -16,18 +16,15 @@ li.movie-card(data-hook="action-select").person.list-group-item.container.hvr-gr
               span.movie-rating(data-hook="rating").mr-2.ml-1
         p.movie-genre(data-hook="genre")
         p.movie-plot.mt-4(data-hook="plot")
-      .movie-votes
-        div.float-right 
-          div(style="margin-top: 12px;")
-            .pretty.p-icon.p-curve.p-smooth(style="font-size: 32px;")
-              input(data-hook="selected", type="checkbox")
-              .state.p-success(style="margin-right: -42px;")
-                i.icon.mdi.mdi-check
-                label
-
-        div.float-right.mr-4(style="font-size: 18px; margin-top: 12px;")
-          span(data-hook="votes")
-          | &nbsp;voturi
+        .movie-votes
+          .pretty.p-icon.p-curve.p-smooth(style="font-size: 32px;").mr-1
+            input(data-hook="selected", type="checkbox")
+            .state.p-success
+              i.icon.mdi.mdi-check
+              label
+          div(style="font-size: 18px;")
+            span(data-hook="votes")
+            | &nbsp;voturi
 
 
 
