@@ -2,6 +2,8 @@ import PageView from './base'
 import $ from 'jquery'
 import _ from 'lodash'
 import toastr from 'toastr'
+import showdown from 'showdown'
+let markdown = new showdown.Converter()
 
 import votingTemplate from '../../templates/pages/voting'
 
@@ -15,14 +17,12 @@ export default PageView.extend({
             type: 'text',
             hook: 'name',
         },
-        'model.poll.info': [{
-            type: 'attribute',
-            name: 'href',
+        'model.poll.info': {
+            type: (el, val) => {
+                el.innerHTML = markdown.makeHtml(val)
+            },
             hook: 'info',
-        },{
-            type: 'text',
-            hook: 'info',
-        }],
+        },
     },
     events: {
         'click [data-hook~=action-vote]': 'vote',
@@ -40,6 +40,10 @@ export default PageView.extend({
             this.queryByHook('movie-list'), {
                 reverse: true
             })
+
+        if (!this.model.poll.info) {
+            $(this.queryByHook('info-container')).hide()
+        }
         
         this.fetchModel()
     },

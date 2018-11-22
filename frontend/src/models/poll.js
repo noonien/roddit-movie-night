@@ -7,11 +7,11 @@ export default AmpersandModel.extend({
     props: {
         poll: {
             id: 'any',
-            name: ['string', true, ''],
-            info: ['string', true, ''],
-            created_at: ['string', true, ''],
-            updated_at: ['string', true, ''],
-            closes_at: ['string', true, ''],
+            name: 'string',
+            info: 'string',
+            created_at: 'string',
+            updated_at: 'string',
+            closes_at: 'string',
         },
         votes: 'array'
     },

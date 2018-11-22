@@ -1,30 +1,27 @@
-li.movie-card(data-hook="action-select").person.list-group-item.container.hvr-underline-reveal
-  .row
-    .col-3
-      img.img-fluid(data-hook="image", href=imdb_url)
-    .col.pt-3(style='display: flex;')
-      .movie-body
-        .row
-          .col
-            a.movie-title(data-hook="name").mr-2
+.card.movie-card(data-hook="action-select").hvr-underline-reveal
+  .movie-poster(data-hook="poster")
+    .card-body.movie-body
+      .row
+        .col-md-9.col-sm-12
+          a.movie-title(data-hook="name").mr-2
+          span
             | (
             span.movie-year(data-hook="year")
             | )
-          .col
-            .float-right
-              span.mdi.mdi-star
-              span.movie-rating(data-hook="rating").mr-2.ml-1
-        p.movie-genre(data-hook="genre")
-        p.movie-plot.mt-4(data-hook="plot")
-        .movie-votes
-          .pretty.p-icon.p-curve.p-smooth(style="font-size: 32px;").mr-1
-            input(data-hook="selected", type="checkbox")
-            .state.p-success
-              i.icon.mdi.mdi-check
-              label
-          div(style="font-size: 18px;")
-            span(data-hook="votes")
-            | &nbsp;voturi
+        .col-md-3.col-sm-12
+          .movie-rating-container
+            span.movie-rating(data-hook="rating").mr-2
+            img(width='42' height='29' src="/public/images/imdb.png").mb-1
+      p.movie-genre(data-hook="genre")
+      p.movie-plot.mt-2(data-hook="plot")
+      .movie-votes
+        span(data-hook="votes")
+        | &nbsp;voturi
+        .pretty.p-icon.p-curve.p-smooth(style="font-size: 32px;").mr-0.ml-3
+          input(data-hook="selected", type="checkbox")
+          .state.p-success(style='width: 34px;')
+            i.icon.mdi.mdi-check
+            label
 
 
 

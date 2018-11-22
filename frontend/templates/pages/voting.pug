@@ -1,17 +1,20 @@
 section.page.pageOne
-  .row
+  .row.mt-1
     .col
       h2(data-hook="name")
+  .row.mt-4.mb-5(data-hook="info-container")
     .col
-      a.h3(data-hook="info")
+      .card
+        .card-body
+          div(data-hook="info").info-body
 
-  h3(style="margin-top: 2em;").mb-3 Propune un film:
+  .movie-card-group.mt-4(data-hook="movie-list")
+
+  h3.mt-5.mb-3 Propune un film:
   .input-group.input-group-lg.mb-4
     input.form-control(data-hook="suggest-input" type='text', placeholder="IMDB link", aria-label="IMDB link")
     .input-group-append
       button.btn.btn-success(data-hook="action-suggest-movie" type='button') Propune
 
-  h3.mt-5 Filme propuse:
-  ul.list-group.mt-4.mb-5(data-hook="movie-list")
 
 
