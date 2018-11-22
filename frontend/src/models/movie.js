@@ -4,17 +4,17 @@ import AmpersandModel from 'ampersand-model'
 export default AmpersandModel.extend({
     props: {
         id: 'any',
-        votes: ['number', true, 0],
-        title: ['string', true, ''],
-        year: ['string', true, ''],
-        genre: ['string', true, ''],
-        plot: ['string', true, ''],
-        poster: ['string', true, ''],
-        imdb_url: ['string', true, ''],
-        ratings: 'array'
+        votes: 'number',
+        title: 'string',
+        year: 'string',
+        genre: 'string',
+        plot: 'string',
+        poster: 'string',
+        imdb_url: 'string',
+        ratings: 'array',
     },
     session: {
-        selected: ['boolean', true, false]
+        selected: 'boolean',
     },
     derived: {
         rating_imdb: {

@@ -1,19 +1,20 @@
 // This app view is responsible for rendering all content that goes into
 // <html>. It's initted right away and renders itself on DOM ready.
-var app = require('ampersand-app');
-var setFavicon = require('favicon-setter');
-var View = require('ampersand-view');
-var dom = require('ampersand-dom');
-var ViewSwitcher = require('ampersand-view-switcher');
-var _ = require('lodash');
-var domify = require('domify');
-var localLinks = require('local-links');
+
+import app from 'ampersand-app'
+import setFavicon from 'favicon-setter'
+import View from 'ampersand-view'
+import dom from 'ampersand-dom'
+import ViewSwitcher from 'ampersand-view-switcher'
+import _ from 'lodash'
+import domify from 'domify'
+import localLinks from 'local-links'
 
 import bodyTemplate from '../../templates/body.pug'
 import headTemplate from '../../templates/head.pug'
 
 
-module.exports = View.extend({
+export default View.extend({
     template: bodyTemplate,
     autoRender: true,
     initialize() {

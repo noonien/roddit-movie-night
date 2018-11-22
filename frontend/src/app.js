@@ -11,7 +11,7 @@ import { getCookie } from './utils'
 
 import '../stylesheets/app.styl'
 import '@mdi/font/css/materialdesignicons'
-import 'bootstrap/dist/css/bootstrap'
+import '../stylesheets/vendor/bootstrap-darkly.min.css'
 import 'pretty-checkbox/dist/pretty-checkbox'
 import 'toastr/build/toastr.css'
 

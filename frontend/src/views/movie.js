@@ -4,11 +4,16 @@ import movieTemplate from '../../templates/includes/movie'
 export default View.extend({
     template: movieTemplate,
     bindings: {
-        'model.title': '[data-hook~=name]',
+        'model.title': {
+            hook: 'name'
+        },
         'model.poster': {
-            type: 'attribute',
-            hook: 'image',
-            name: 'src'
+            type: (el, val) => {
+                console.log('el, val:', el, val);
+                
+                $(el).css('background-image', `url(${val})`)
+            },
+            hook: 'poster',
         },
         'model.imdb_url': {
             type: 'attribute',
@@ -21,23 +26,18 @@ export default View.extend({
             name: 'checked'
         },
         'model.votes': {
-            type: 'text',
             hook: 'votes',
         },
         'model.plot': {
-            type: 'text',
             hook: 'plot',
         },
         'model.genre': {
-            type: 'text',
             hook: 'genre',
         },
         'model.year': {
-            type: 'text',
             hook: 'year',
         },
         'model.rating_imdb': {
-            type: 'text',
             hook: 'rating',
         },
     },
