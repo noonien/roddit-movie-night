@@ -15,6 +15,8 @@ import 'toastr/build/toastr.css'
 
 let FP2 = Fingerprint2.default()
 
+let version = '14:41'
+
 toastr.options = {
     "positionClass": "toast-bottom-right",
 }
