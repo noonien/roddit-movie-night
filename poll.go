@@ -37,10 +37,10 @@ func getPoll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	movies := res.Movies
-	sort.Slice(movies, func(i, j int) bool {
-		mi, mj := movies[i], movies[j]
-		return mi.Votes > mj.Votes || strings.Compare(mi.Title, mj.Title) < 0
+	sort.Slice(res.Movies, func(i, j int) bool {
+		mi, mj := res.Movies[i], res.Movies[j]
+		return mi.Votes > mj.Votes ||
+			(mi.Votes == mj.Votes && strings.Compare(mi.Title, mj.Title) < 0)
 	})
 
 	var votes []Vote
