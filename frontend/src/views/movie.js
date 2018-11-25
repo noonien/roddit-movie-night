@@ -47,6 +47,6 @@ export default View.extend({
     select() {
         this.model.selected = !this.model.selected
         
-        this.parent.vote()
+        this.parent.vote(this.model.id, this.model.selected)
     },
 });

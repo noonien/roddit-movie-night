@@ -37,9 +37,7 @@ export default PageView.extend({
         this.renderWithTemplate()
         this.renderCollection(this.model.movies,
             MovieView,
-            this.queryByHook('movie-list'), {
-                reverse: true
-            })
+            this.queryByHook('movie-list'))
 
         if (!this.model.poll.info) {
             $(this.queryByHook('info-container')).hide()
@@ -47,9 +45,14 @@ export default PageView.extend({
         
         this.fetchModel()
     },
-    vote() {
+    vote(id, voted) {
         let votes = this.model.movies.where({ selected: true })
             .map(movie => movie.id)
+
+        // increment vote locally
+        let votedMovie = this.model.movies.findWhere({ id })
+        let increment = voted ? 1 : -1
+        votedMovie.votes += increment
 
         $.ajax({
             url: '/api/polls/latest/vote',
@@ -59,14 +62,8 @@ export default PageView.extend({
                 votes
             })
         })
-        .then(() => {
-            // toastr.success('Ai votat cu succes. Merci!')
-        })
         .fail(err => {
             toastr.error('S-a produs o eroare, incearca din nou. Sorry!')
-        })
-        .always(() => {
-            this.fetchModel();
         })
     },
     suggestMovie() {

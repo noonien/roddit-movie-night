@@ -3,5 +3,4 @@ import Movie from './movie'
 
 export default Collection.extend({
   model: Movie,
-  comparator: 'votes',
 })
